@@ -373,24 +373,24 @@ async def process_resume(
     db.add(new_resume)
     db.commit()
     db.refresh(new_resume)
-    await send_email(
-        to_email=new_resume.email,
-        subject="Resume Received Successfully",
-        body=f"""
-    Hi {new_resume.candidate_name},
+    # await send_email(
+    #     to_email=new_resume.email,
+    #     subject="Resume Received Successfully",
+    #     body=f"""
+    # Hi {new_resume.candidate_name},
 
-    Your resume has been received successfully.
+    # Your resume has been received successfully.
 
-    ATS Score: {new_resume.ats_score}%
-    Semantic Score: {new_resume.semantic_score}%
-    Status: {new_resume.status}
+    # ATS Score: {new_resume.ats_score}%
+    # Semantic Score: {new_resume.semantic_score}%
+    # Status: {new_resume.status}
 
-    Thank you for applying.
+    # Thank you for applying.
 
-    Regards,
-    HR Team
-    """
-   )
+    # Regards,
+    # HR Team
+    # """
+  # )
 
     new_match = models.MatchResult(
         job_id=new_job.job_id,

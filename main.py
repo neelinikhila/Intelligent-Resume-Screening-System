@@ -224,55 +224,55 @@ async def process_resume(
 
     bert_skills = []
 
-for skill in SKILLS:
-    if re.search(r"\b" + re.escape(skill) + r"\b", text, re.IGNORECASE):
-        bert_skills.append(skill)
+    for skill in SKILLS:
+        if re.search(r"\b" + re.escape(skill) + r"\b", text, re.IGNORECASE):
+            bert_skills.append(skill)
 
-    bert_skills = skill_classifier.extract_skills(text)
+        bert_skills = skill_classifier.extract_skills(text)
 
-    candidate = extractor.extract_candidate_details(
-        text,
-        hyperlinks
-    )
+        candidate = extractor.extract_candidate_details(
+            text,
+            hyperlinks
+        )
 
-    sections = section_parser.parse_sections(text)
+        sections = section_parser.parse_sections(text)
 
-    result = {}
+        result = {}
 
-    matched, total, resume_percentage = matcher.resume_score(
-    bert_skills
-    )
-
-    required_skills, matched_skills, job_match_percentage = matcher.job_match(
-        bert_skills,
-        job_description
-    )
-
-    missing_skills = matcher.missing_skills(
+        matched, total, resume_percentage = matcher.resume_score(
         bert_skills
-    )
+        )
 
-    candidate_skills = bert_skills
-    extra_skills = []
+        required_skills, matched_skills, job_match_percentage = matcher.job_match(
+            bert_skills,
+            job_description
+        )
 
-    semantic_score = 75
-    recommendation = "⭐⭐⭐ Good Match"
+        missing_skills = matcher.missing_skills(
+            bert_skills
+        )
+
+        candidate_skills = bert_skills
+        extra_skills = []
+ 
+        semantic_score = 75
+        recommendation = "⭐⭐⭐ Good Match"
 
     
 
-    resume_percentage = round(
-    resume_percentage,
-    2
-)
-
-    ats_score = round(
-        (
-            resume_percentage * 0.30 +
-            job_match_percentage * 0.40 +
-            semantic_score * 0.30
-        ),
+        resume_percentage = round(
+        resume_percentage,
         2
     )
+
+        ats_score = round(
+            (
+                resume_percentage * 0.30 +
+                job_match_percentage * 0.40 +
+                semantic_score * 0.30
+            ),
+            2
+        )
 
     if ats_score >= 85:
         status = "Selected"

@@ -39,7 +39,7 @@ from email.message import EmailMessage
 
 async def send_email(to_email, subject, body):
     message = EmailMessage()
-    message["From"] = "YOUR_EMAIL@gmail.com"
+    message["From"] = "resume.screening.ai@gmail.com"
     message["To"] = to_email
     message["Subject"] = subject
 
@@ -50,8 +50,8 @@ async def send_email(to_email, subject, body):
         hostname="smtp.gmail.com",
         port=587,
         start_tls=True,
-        username="resume.screening.ai@gmail.com",
-        password="wzflpuudakpplcqi",
+        username=os.getenv("EMAIL_USER"),
+        password=os.getenv("EMAIL_PASSWORD"),
     )
 
 app = FastAPI()

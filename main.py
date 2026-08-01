@@ -40,7 +40,7 @@ from email.message import EmailMessage
 
 async def send_email(to_email, subject, body):
     resend.api_key = os.getenv("RESEND_API_KEY")
-    resend.api_key= resend_api_key
+    
 
     params = {
         "from": "onboarding@resend.dev",

@@ -17,6 +17,7 @@ from matcher import ResumeMatcher
 
 
 import os
+import re
 import shutil
 import zipfile
 import tempfile

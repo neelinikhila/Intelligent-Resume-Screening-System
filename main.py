@@ -17,6 +17,7 @@ from matcher import ResumeMatcher
 
 
 import os
+import resend
 import re
 import shutil
 import zipfile
@@ -38,21 +39,16 @@ import aiosmtplib
 from email.message import EmailMessage
 
 async def send_email(to_email, subject, body):
-    message = EmailMessage()
-    message["From"] = "resume.screening.ai@gmail.com"
-    message["To"] = to_email
-    message["Subject"] = subject
+    resend.api_key = os.getenv("RESEND_API_KEY")
 
-    message.set_content(body)
+    params = {
+        "from": "onboarding@resend.dev",
+        "to": [to_email],
+        "subject": subject,
+        "text": body,
+    }
 
-    await aiosmtplib.send(
-        message,
-        hostname="smtp.gmail.com",
-        port=587,
-        start_tls=True,
-        username=os.getenv("EMAIL_USER"),
-        password=os.getenv("EMAIL_PASSWORD"),
-    )
+    resend.Emails.send(params)
 
 app = FastAPI()
 

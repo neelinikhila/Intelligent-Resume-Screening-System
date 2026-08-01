@@ -775,10 +775,7 @@ def match_resumes(job_id: int, request: Request):
      )
 
     
-        semantic_score = ai_matcher.semantic_similarity(
-        resume.resume_text,
-        job.job_description
-        )
+        semantic_score = 0.0
         missing_skills = matcher.missing_skills(found_skills)
 
         ats = matcher.ats_score(

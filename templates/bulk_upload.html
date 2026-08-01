@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}
+Bulk Resume Upload
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-success text-white">
+
+            <h2>Bulk Resume Upload</h2>
+
+    
+
+        </div>
+
+        {% if message %}
+        <div class="alert alert-success mt-3">
+            {{ message }}
+        </div>
+        {% endif %}
+
+        <div class="card-body">
+
+            <form action="/bulk-upload" method="post" enctype="multipart/form-data">
+
+                <div class="mb-3">
+    <label class="form-label">Company Name</label>
+    <input
+        type="text"
+        name="company_name"
+        class="form-control"
+        required
+    >
+</div>
+
+<div class="mb-3">
+    <label class="form-label">Job Title</label>
+    <input
+        type="text"
+        name="job_title"
+        class="form-control"
+        required
+    >
+</div>
+
+<div class="mb-3">
+    <label class="form-label">Job Description</label>
+    <textarea
+        name="job_description"
+        class="form-control"
+        rows="6"
+        required
+    ></textarea>
+</div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Upload ZIP File
+                    </label>
+
+                    <input
+                        type="file"
+                        name="zip_file"
+                        class="form-control"
+                        accept=".zip"
+                        required
+                    >
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="btn btn-success"
+                >
+                    Upload ZIP
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

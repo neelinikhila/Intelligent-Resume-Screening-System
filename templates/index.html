@@ -1,0 +1,406 @@
+{% extends "base.html" %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
+<div class="main-container">
+
+    <h1>📄 Intelligent Resume Screening & Candidate Matching System</h1>
+
+    <form action="/upload"
+          method="POST"
+          enctype="multipart/form-data"
+          class="card p-4 shadow">
+
+        <label class="form-label mt-3">Upload Resume</label>
+
+        <input
+            type="file"
+            name="file"
+            class="form-control"
+            required>
+
+        <label class="form-label mt-3">Company Name</label>
+
+    <input
+        type="text"
+        name="company_name"
+        class="form-control"
+    placeholder="Enter Company Name"
+    required>
+
+<label class="form-label mt-3">Job Title</label>
+
+    <input
+        type="text"
+        name="job_title"
+        class="form-control"
+        placeholder="Enter Job Title"
+        required>
+
+        <label class="form-label mt-3">Job Description</label>
+
+        <textarea
+        class="form-control"
+            name="job_description"
+            rows="8"
+            placeholder="Paste complete Job Description here..."
+            required></textarea>
+
+        <button type="submit" class="btn btn-primary w-100 mt-3">
+            Analyze Resume
+        </button>
+        <hr>
+
+    <a href="/bulk-upload" class="btn btn-success">
+        Bulk Resume Upload (ZIP)
+    </a>
+
+    </form>
+
+{% if result %}
+
+<div class="result">
+
+<h2>👤 Candidate Details</h2>
+
+<div class="card">
+<strong>Name</strong><br>
+{{ result.candidate_name }}
+</div>
+
+<div class="card">
+<strong>Email</strong><br>
+{{ result.email }}
+</div>
+
+<div class="card">
+<strong>Phone</strong><br>
+{{ result.phone }}
+</div>
+
+<div class="card">
+<strong>LinkedIn</strong><br>
+{{ result.linkedin }}
+</div>
+
+<div class="card">
+<strong>GitHub</strong><br>
+{{ result.github }}
+</div>
+
+<div class="card">
+<strong>Portfolio</strong><br>
+{{ result.portfolio }}
+</div>
+
+<hr>
+
+<h2>🎓 Education</h2>
+
+{% if result.education %}
+
+<ul>
+
+{% for item in result.education %}
+
+<li>{{ item }}</li>
+
+{% endfor %}
+
+</ul>
+
+{% else %}
+
+<p>No Education Found</p>
+
+{% endif %}
+
+<hr>
+
+<h2>💼 Experience</h2>
+
+{% if result.experience %}
+
+<ul>
+
+{% for item in result.experience %}
+
+<li>{{ item }}</li>
+
+{% endfor %}
+
+</ul>
+
+{% else %}
+
+<p>No Experience Found</p>
+
+{% endif %}
+<hr>
+
+<h2>📂 Projects</h2>
+
+{% if result.projects %}
+
+<ul>
+
+{% for item in result.projects %}
+
+<li>{{ item }}</li>
+
+{% endfor %}
+
+</ul>
+
+{% else %}
+
+<p>No Projects Found</p>
+
+{% endif %}
+
+<hr>
+
+<h2>📜 Certifications</h2>
+
+{% if result.certifications %}
+
+<ul>
+
+{% for item in result.certifications %}
+
+<li>{{ item }}</li>
+
+{% endfor %}
+
+</ul>
+
+{% else %}
+
+<p>No Certifications Found</p>
+
+{% endif %}
+
+<hr>
+
+<h2>🏆 Achievements</h2>
+
+{% if result.achievements %}
+
+<ul>
+
+{% for item in result.achievements %}
+
+<li>{{ item }}</li>
+
+{% endfor %}
+
+</ul>
+
+{% else %}
+
+<p>No Achievements Found</p>
+
+{% endif %}
+
+<hr>
+
+<h2>🌍 Languages</h2>
+
+{% if result.languages %}
+
+<ul>
+
+{% for item in result.languages %}
+
+<li>{{ item }}</li>
+
+{% endfor %}
+
+</ul>
+
+{% else %}
+
+<p>No Languages Found</p>
+
+{% endif %}
+
+<hr>
+
+<h2>📊 Resume Analysis</h2>
+
+<div class="card">
+<strong>Resume Score</strong><br>
+{{ result.resume_score }}
+</div>
+
+<div class="card">
+<strong>Resume Percentage</strong><br>
+{{ result.resume_percentage }}
+</div>
+
+<div class="card">
+<strong>Job Match Percentage</strong><br>
+{{ result.job_match_percentage }}
+</div>
+
+<div class="card">
+<strong>ATS Score</strong><br>
+{{ result.ats_score }}
+</div>
+
+<div class="card">
+<strong>🧠 Semantic Score</strong><br>
+{{ result.semantic_score }}
+</div>
+
+<div class="card">
+<strong>🎯 Recommendation</strong><br>
+{{ result.recommendation }}
+</div>
+
+<div class="card">
+<strong>Status</strong><br>
+{{ result.status }}
+</div>
+
+<hr>
+<h2>🏢 Company Required Skills</h2>
+
+{% if result.required_skills %}
+
+<ul>
+
+{% for skill in result.required_skills %}
+
+<li>{{ skill }}</li>
+
+{% endfor %}
+
+</ul>
+
+{% else %}
+
+<p>No Required Skills Found</p>
+
+{% endif %}
+
+<hr>
+
+<h2>👨‍💻 Candidate Skills</h2>
+
+{% if result.candidate_skills %}
+
+<ul>
+
+{% for skill in result.candidate_skills %}
+
+<li>{{ skill }}</li>
+
+{% endfor %}
+
+</ul>
+
+{% else %}
+
+<p>No Candidate Skills Found</p>
+
+{% endif %}
+
+<hr>
+
+<h2>✅ Matched Skills</h2>
+
+{% if result.matched_skills %}
+
+<ul>
+
+{% for skill in result.matched_skills %}
+
+<li>{{ skill }}</li>
+
+{% endfor %}
+
+</ul>
+
+{% else %}
+
+<p>No Matched Skills</p>
+
+{% endif %}
+
+<hr>
+
+<h2>❌ Missing Skills</h2>
+
+{% if result.missing_skills %}
+
+<ul>
+
+{% for skill in result.missing_skills %}
+
+<li>{{ skill }}</li>
+
+{% endfor %}
+
+</ul>
+
+{% else %}
+
+<p>No Missing Skills</p>
+
+{% endif %}
+
+<hr>
+
+<h2>⭐ Extra Skills</h2>
+
+{% if result.extra_skills %}
+
+<ul>
+
+{% for skill in result.extra_skills %}
+
+<li>{{ skill }}</li>
+
+{% endfor %}
+
+</ul>
+
+{% else %}
+
+<p>No Extra Skills</p>
+
+{% endif %}
+
+<hr>
+
+<h2>🤖 BERT Extracted Skills</h2>
+
+{% if result.bert_skills %}
+
+<ul>
+
+{% for skill in result.bert_skills %}
+
+<li>{{ skill }}</li>
+
+{% endfor %}
+
+</ul>
+
+{% else %}
+
+<p>No BERT Skills Found</p>
+
+{% endif %}
+
+</div>
+
+{% endif %}
+
+</div>
+
+{% endblock %}

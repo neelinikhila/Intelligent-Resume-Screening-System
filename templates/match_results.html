@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block title %}
+Interview Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="main-container mt-5">
+
+    <h2 class="text-center text-primary mb-4">
+        Resume Match Results
+    </h2>
+
+    <div class="card mb-4">
+        <div class="card-body">
+
+            <h4>{{ job.company_name }}</h4>
+
+            <h5>{{ job.job_title }}</h5>
+
+            <p>{{ job.job_description }}</p>
+
+        </div>
+    </div>
+
+    {% if top_candidate %}
+
+<div class="card border-success mb-4">
+    <div class="card-header bg-success text-white">
+        🏆 Top Candidate
+    </div>
+
+    <div class="card-body">
+
+        <h5>{{ top_candidate.candidate_name }}</h5>
+
+        <p><b>Email:</b> {{ top_candidate.email }}</p>
+
+        <p><b>ATS Score:</b> {{ "%.2f"|format(top_candidate.ats_score) }}%</p>
+
+        <p><b>Semantic Score:</b> {{ "%.2f"|format(top_candidate.semantic_score) }}%</p>
+
+        <p><b>Status:</b> {{ top_candidate.status }}</p>
+
+    </div>
+</div>
+
+{% endif %}
+
+    <table class="table table-bordered table-striped">
+
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Rank</th>
+                <th>Candidate</th>
+                <th>Email</th>
+                <th>Resume %</th>
+                <th>ATS</th>
+                <th>Semantic</th>
+                <th>Matched Skills</th>
+                <th>Missing Skills</th>
+                <th>Recommendation</th>
+                <th>Explanation</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+        {% for resume in resumes %}
+
+        <tr>
+
+            <td>{{ resume.id }}</td>
+            <td>{{ loop.index }}</td>
+
+            <td>{{ resume.candidate_name }}</td>
+
+            <td>{{ resume.email }}</td>
+
+            <td>{{ resume.resume_percentage }}</td>
+
+            <td>{{ "%.2f"|format(resume.ats_score) }}%</td>
+
+            <td>{{ "%.2f"|format(resume.semantic_score) }}%</td>
+
+            <td>{{ resume.matched_skills }}</td>
+
+            <td>{{ resume.missing_skills }}</td>
+
+            <td>{{ resume.recommendation }}</td>
+
+            <td style="min-width:350px;white-space: pre-line;">
+                {{ resume.explanation }}
+            </td>
+
+            <td>{{ resume.status }}</td>
+
+        </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}

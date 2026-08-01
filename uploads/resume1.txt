@@ -1,0 +1,5 @@
+John Doe
+Email: john@example.com
+Skills: Python, SQL, FastAPI
+Experience: 2 years
+Education: B.Tech

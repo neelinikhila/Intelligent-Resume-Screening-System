@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}
+Interview Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="main-container mt-5">
+
+    <h2 class="text-center text-primary mb-4">
+        Saved Job Descriptions
+    </h2>
+
+    <table class="table table-bordered table-striped table-hover">
+
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Company</th>
+                <th>Job Title</th>
+                <th>Job Description</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+        {% for job in jobs %}
+
+        <tr>
+
+            <td>{{ job.job_id }}</td>
+
+            <td>{{ job.company_name }}</td>
+
+            <td>{{ job.job_title }}</td>
+
+            <td>{{ job.job_description[:100] }}...</td>
+
+            <td>
+
+                <a href="/match/{{ job.job_id }}"
+                   class="btn btn-success btn-sm">
+
+                    Match Resumes
+
+                </a>
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}

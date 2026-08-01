@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}
+Interview Dashboard
+{% endblock %}
+
+{% block content %}
+
+<h1>Candidate Details</h1>
+
+<hr>
+
+<h2>Personal Information</h2>
+
+<p><b>Name:</b> {{ resume.candidate_name }}</p>
+<p><b>Email:</b> {{ resume.email }}</p>
+<p><b>Phone:</b> {{ resume.phone }}</p>
+<p><b>LinkedIn:</b> {{ resume.linkedin }}</p>
+<p><b>GitHub:</b> {{ resume.github }}</p>
+<p><b>Portfolio:</b> {{ resume.portfolio }}</p>
+
+<hr>
+
+<h2>Education</h2>
+<p>{{ resume.education }}</p>
+
+<hr>
+
+<h2>Experience</h2>
+<p>{{ resume.experience }}</p>
+
+<hr>
+
+<h2>Projects</h2>
+<p>{{ resume.projects }}</p>
+
+<hr>
+
+<h2>Certifications</h2>
+<p>{{ resume.certifications }}</p>
+
+<hr>
+
+<h2>Achievements</h2>
+<p>{{ resume.achievements }}</p>
+
+<hr>
+
+<h2>Languages</h2>
+<p>{{ resume.languages }}</p>
+
+<hr>
+
+<h2>Skills</h2>
+
+<p><b>Candidate Skills:</b> {{ resume.candidate_skills }}</p>
+
+<p><b>Required Skills:</b> {{ resume.required_skills }}</p>
+
+<p><b>Matched Skills:</b> {{ resume.matched_skills }}</p>
+
+<p><b>Missing Skills:</b> {{ resume.missing_skills }}</p>
+
+<p><b>Extra Skills:</b> {{ resume.extra_skills }}</p>
+
+<hr>
+
+<h2>Scores</h2>
+
+<p><b>Resume Score:</b> {{ resume.resume_percentage }}%</p>
+
+<p><b>ATS Score:</b> {{ resume.ats_score }}%</p>
+
+<p><b>Semantic Score:</b> {{ resume.semantic_score }}%</p>
+
+<p><b>Recommendation:</b> {{ resume.recommendation }}</p>
+
+<p><b>Status:</b> {{ resume.status }}</p>
+
+<hr>
+
+<div class="mt-4">
+
+    <a href="/interview?candidate_id={{ resume.id }}"
+       class="btn btn-primary">
+        Schedule Interview
+    </a>
+
+</div>
+
+{% endblock %}

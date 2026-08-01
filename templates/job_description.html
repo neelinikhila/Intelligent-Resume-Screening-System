@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}
+Interview Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="card shadow p-4">
+
+        <h2 class="text-center text-primary mb-4">
+            Add Job Description
+        </h2>
+
+        <form action="/job/add" method="post">
+
+            <div class="mb-3">
+                <label class="form-label">Company Name</label>
+                <input
+                    type="text"
+                    name="company_name"
+                    class="form-control"
+                    required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Job Title</label>
+                <input
+                    type="text"
+                    name="job_title"
+                    class="form-control"
+                    required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Job Description</label>
+                <textarea
+                    name="job_description"
+                    class="form-control"
+                    rows="10"
+                    required></textarea>
+            </div>
+
+            <button class="btn btn-success w-100">
+                Save Job Description
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

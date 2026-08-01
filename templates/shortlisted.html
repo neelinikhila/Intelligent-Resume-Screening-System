@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}
+Interview Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="main-container mt-5">
+
+    <h2 class="text-center text-success mb-4">
+        Shortlisted Candidates
+    </h2>
+
+    <table class="table table-bordered table-striped">
+
+        <thead class="table-success">
+
+            <tr>
+                <th>ID</th>
+                <th>Candidate</th>
+                <th>Email</th>
+                <th>ATS</th>
+                <th>Semantic</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+        {% for candidate in candidates %}
+
+            <tr>
+
+                <td>{{ candidate.id }}</td>
+
+                <td>{{ candidate.candidate_name }}</td>
+
+                <td>{{ candidate.email }}</td>
+
+                <td>{{ "%.2f"|format(candidate.ats_score) }}%</td>
+
+                <td>{{ "%.2f"|format(candidate.semantic_score) }}%</td>
+
+                <td>{{ candidate.status }}</td>
+
+                <td>
+    <a href="/interview?candidate_id={{ candidate.id }}">Schedule Interview</a>
+</td>
+
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}

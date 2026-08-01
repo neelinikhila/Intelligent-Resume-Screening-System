@@ -1,0 +1,15 @@
+fastapi
+uvicorn
+jinja2
+python-multipart
+sqlalchemy
+psycopg2-binary
+pymupdf
+python-docx
+sentence-transformers
+torch
+transformers
+scikit-learn
+numpy
+pandas
+spacy

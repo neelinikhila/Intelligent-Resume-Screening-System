@@ -1,0 +1,152 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#eef2f7;
+}
+
+/* ---------- MAIN CONTENT ---------- */
+
+.main-container{
+    max-width:1300px;
+    margin:35px auto;
+    background:#fff;
+    border-radius:15px;
+    padding:30px;
+    box-shadow:0 5px 20px rgba(0,0,0,.10);
+}
+
+/* ---------- HEADINGS ---------- */
+
+h1{
+    color:#0b5394;
+    font-weight:700;
+    text-align:center;
+    margin-bottom:25px;
+}
+
+h2{
+    color:#0b5394;
+    font-weight:600;
+}
+
+/* ---------- FORM ---------- */
+
+label{
+    font-weight:600;
+}
+
+textarea{
+    resize:none;
+}
+
+/* ---------- BUTTON ---------- */
+
+.btn-primary{
+    background:#0b5394;
+    border:none;
+}
+
+.btn-primary:hover{
+    background:#073763;
+}
+
+/* ---------- CARDS ---------- */
+
+.card{
+    border:none;
+    border-radius:12px;
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+}
+
+.card-body{
+    padding:25px;
+}
+
+/* ---------- DASHBOARD ---------- */
+
+.dashboard-card{
+    min-height:120px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+}
+
+.dashboard-card h3{
+    font-size:32px;
+    font-weight:bold;
+}
+
+.dashboard-card h5{
+    font-size:18px;
+}
+
+/* ---------- TABLE ---------- */
+
+.table{
+    margin-top:20px;
+}
+
+.table th{
+    background:#0b5394;
+    color:white;
+    text-align:center;
+    vertical-align:middle;
+}
+
+.table td{
+    text-align:center;
+    vertical-align:middle;
+}
+
+.table-hover tbody tr:hover{
+    background:#eef5ff;
+}
+
+/* ---------- BADGES ---------- */
+
+.badge{
+    font-size:14px;
+    padding:8px 12px;
+}
+
+/* ---------- LINKS ---------- */
+
+a{
+    text-decoration:none;
+}
+
+a:hover{
+    text-decoration:underline;
+}
+
+/* ---------- CHART ---------- */
+
+.chart-container{
+    height:320px;
+}
+
+/* ---------- MOBILE ---------- */
+
+@media(max-width:768px){
+
+.main-container{
+
+margin:10px;
+
+padding:20px;
+
+}
+
+.dashboard-card{
+
+margin-bottom:20px;
+
+}
+
+}

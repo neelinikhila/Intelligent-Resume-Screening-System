@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}
+Interview Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <h2>Scheduled Interviews</h2>
+
+    <a href="/interview" class="btn btn-primary">
+        + Schedule Interview
+    </a>
+
+</div>
+
+<div class="card shadow">
+
+    <div class="card-body">
+
+        <table class="table table-bordered table-striped table-hover">
+    <tr>
+        <th>ID</th>
+        <th>Candidate</th>
+        <th>Email</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Mode</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+
+    {% for interview in interviews %}
+    <tr>
+        <td>{{ interview.id }}</td>
+        <td>{{ interview.candidate_name }}</td>
+        <td>{{ interview.email }}</td>
+        <td>{{ interview.interview_date }}</td>
+        <td>{{ interview.interview_time }}</td>
+        <td>{{ interview.interview_mode }}</td>
+        <td>{{ interview.status }}</td>
+        <td>
+    <a href="/interview/edit/{{ interview.id }}">Edit</a>
+
+    |
+
+    <a href="/interview/delete/{{ interview.id }}"
+       onclick="return confirm('Delete this interview?')">
+       Delete
+    </a>
+</td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+    </div>
+</div>
+
+
+{% endblock %}

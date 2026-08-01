@@ -1,0 +1,308 @@
+{% extends "base.html" %}
+
+{% block title %}
+Resume History
+{% endblock %}
+
+{% block content %}
+<div class="main-container-fluid px-5 mt-4">
+
+    <form method="get" action="/history" class="row g-3 mb-4">
+
+    <div class="col-md-4">
+        <input
+            type="text"
+            name="search"
+            class="form-control"
+            placeholder="Search Candidate / Email / Company"
+            value="{{ search if search else '' }}">
+    </div>
+
+    <div class="col-md-3">
+        <select name="status" class="form-select">
+            <option value="">All Status</option>
+            <option value="Selected">Selected</option>
+            <option value="Shortlisted">Shortlisted</option>
+            <option value="Rejected">Rejected</option>
+        </select>
+    </div>
+
+    
+        <div class="col-md-3">
+    <select name="sort" class="form-select">
+        <option value="">Sort By</option>
+        <option value="ats">ATS Score</option>
+        <option value="semantic">Semantic Score</option>
+        <option value="resume">Resume Score</option>
+    </select>
+</div>
+
+ <div class="col-md-2">
+        <button class="btn btn-primary w-100">
+            Search
+        </button>
+    </div>
+
+</form>
+
+    <h1 class="text-center text-primary mb-4">
+        Resume Screening Dashboard
+    </h1>
+    <h2 class="text-center mb-4">Dashboard</h2>
+
+<div class="row mb-4">
+
+    <div class="col-lg-2 col-md-6 mb-3">
+        <div class="card shadow text-center bg-primary text-white">
+            <div class="card-body py-5">
+                <h5>Total</h5>
+                <h3>{{ total_resumes }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-2 col-md-6 mb-3">
+        <div class="card shadow text-center bg-success text-white">
+            <div class="card-body py-5">
+                <h5>Selected</h5>
+                <h3>{{ selected }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-2 col-md-6 mb-3">
+        <div class="card shadow text-center bg-warning">
+            <div class="card-body py-5">
+                <h5>Shortlisted</h5>
+                <h3>{{ shortlisted }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-2 col-md-6 mb-3">
+        <div class="card shadow text-center bg-danger text-white">
+            <div class="card-body py-5">
+                <h5>Rejected</h5>
+                <h3>{{ rejected }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-md-12 mb-3">
+        <div class="card shadow text-center bg-info text-white">
+            <div class="card-body py-5">
+                <h5>Average ATS</h5>
+                <h3>{{ average_ats }}%</h3>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row mt-4 justify-content-center align-items-center">
+
+    <div class="col-md-6">
+        <div style="height:250px; width:250px; margin:auto;">
+    <canvas id="statusChart"></canvas>
+</div>
+    </div>
+
+    
+
+    <div class="col-md-6">
+       <div style="height:250px; display:flex; align-items:center;">
+    <canvas id="atsChart"></canvas>
+</div>
+    </div>
+
+</div>
+
+
+
+
+<div class="row mt-4 justify-content-center">
+
+    <div class="col-md-12">
+        <div style="height:250px;">
+            <canvas id="semanticChart"></canvas>
+        </div>
+    </div>
+
+</div>
+    <hr class="my-3">
+
+
+
+<div class="d-flex justify-content-between align-items-center mt-4 mb-3">
+
+    <h4 class="fw-bold text-primary">
+        Candidate Records
+    </h4>
+
+    <div>
+
+        <a href="/export/pdf" class="btn btn-danger me-2">
+            📄 Export PDF
+        </a>
+
+        <a href="/export/excel" class="btn btn-success">
+            📊 Export Excel
+        </a>
+
+    </div>
+
+</div>
+
+    <div class="table-responsive mt-4">
+<table class="table table-bordered table-hover table-striped align-middle">
+
+        <tr>
+            <th>Rank</th>
+            <th>ID</th>
+            <th>Candidate</th>
+            <th>Email</th>
+            <th>Company</th>
+<th>Job Title</th>
+            <th>Resume %</th>
+            <th>ATS</th>
+            <th>Semantic</th>
+            <th>Status</th>
+        </tr>
+
+        {% for resume in resumes %}
+<tr>
+    <td>{{ loop.index }}</td>
+    <td>{{ resume.id }}</td>
+
+    <td>
+        <a href="/candidate/{{ resume.id }}"
+class="fw-bold text-decoration-none text-primary">
+    {{ resume.candidate_name }}
+</a>
+    </td>
+
+    <td>{{ resume.email }}</td>
+    <td>{{ resume.company_name }}</td>
+    <td>{{ resume.job_title }}</td>
+    <td>{{ resume.resume_percentage }}</td>
+
+    <td>
+        {% if resume.ats_score %}
+        {{ "%.2f"|format(resume.ats_score) }}%
+        {% else %}
+        N/A
+        {% endif %}
+    </td>
+
+    <td>
+        {% if resume.semantic_score %}
+        {{ "%.2f"|format(resume.semantic_score) }}%
+        {% else %}
+        N/A
+        {% endif %}
+    </td>
+
+    <td>
+    <form action="/update_status/{{ resume.id }}" method="post">
+        <select name="status" class="form-select form-select-sm shadow-sm">
+            <option value="Selected" {% if resume.status=="Selected" %}selected{% endif %}>Selected</option>
+
+            <option value="Shortlisted" {% if resume.status=="Shortlisted" %}selected{% endif %}>Shortlisted</option>
+
+            <option value="Rejected" {% if resume.status=="Rejected" %}selected{% endif %}>Rejected</option>
+        </select>
+
+        <button type="submit" class="btn btn-primary btn-sm w-100 mt-2">
+            Update
+        </button>
+    </form>
+</td>
+</tr>
+{% endfor %}
+
+    </table>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+const labels = {{ labels | tojson }};
+const atsScores = {{ ats_scores | tojson }};
+const semanticScores = {{ semantic_scores | tojson }};
+
+// ATS Chart
+new Chart(document.getElementById("atsChart"), {
+    type: "bar",
+    data: {
+        labels: labels,
+        datasets: [{
+            label: "ATS Score",
+            data: atsScores,
+            backgroundColor: "blue"
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+
+        plugins: {
+    legend: {
+        display: false
+    }
+}
+    }
+});
+
+// Semantic Chart
+new Chart(document.getElementById("semanticChart"), {
+    type: "bar",
+    data: {
+        labels: labels,
+        datasets: [{
+            label: "Semantic Score",
+            data: semanticScores,
+            backgroundColor: "green"
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+
+        plugins: {
+    legend: {
+        position: "top"
+    }
+}
+    }
+});
+
+
+// Status Chart
+new Chart(document.getElementById("statusChart"), {
+    type: "pie",
+    data: {
+        labels: ["Selected", "Shortlisted", "Rejected"],
+        datasets: [{
+            data: [
+                Number("{{ selected }}"),
+                Number("{{ shortlisted }}"),
+                Number("{{ rejected }}")
+            ],
+            backgroundColor: ["green", "orange", "red"]
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: "top"
+            }
+        }
+    }
+});
+   
+</script>
+
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}
+Interview Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+    <div class="col-md-6">
+
+        <div class="card shadow">
+
+            <div class="card-header bg-warning text-dark">
+
+                <h3 class="text-center">
+                    Edit Interview
+                </h3>
+
+            </div>
+
+            <div class="card-body">
+
+<form method="post" action="/interview/edit/{{ interview.id }}">
+
+    <label>Candidate Name</label>
+    <input type="text" name="candidate_name" class="form-control mb-3" value="{{ interview.candidate_name }}">
+
+    <label>Email</label>
+    <input type="email" name="email" class="form-control mb-3" value="{{ interview.email }}">
+
+    <label>Date</label>
+    <input type="date" name="interview_date" class="form-control mb-3" value="{{ interview.interview_date }}">
+
+    <label>Time</label>
+    <input type="time" name="interview_time" class="form-control mb-3" value="{{ interview.interview_time }}">
+
+    <label>Mode</label>
+
+    <select name="interview_mode" class="form-select mb-3">
+
+    <option value="Online"
+        {% if interview.interview_mode=="Online" %}selected{% endif %}>
+        Online
+    </option>
+
+    <option value="Offline"
+        {% if interview.interview_mode=="Offline" %}selected{% endif %}>
+        Offline
+    </option>
+
+</select>
+<button
+    type="submit"
+    class="btn btn-warning w-100 mt-3">
+    Update Interview
+</button>
+
+    
+
+  
+
+</form>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}

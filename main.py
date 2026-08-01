@@ -17,7 +17,6 @@ from matcher import ResumeMatcher
 
 
 import os
-import resend
 import re
 import shutil
 import zipfile

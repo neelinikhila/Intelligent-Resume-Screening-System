@@ -228,7 +228,7 @@ async def process_resume(
         if re.search(r"\b" + re.escape(skill) + r"\b", text, re.IGNORECASE):
             bert_skills.append(skill)
 
-        bert_skills = skill_classifier.extract_skills(text)
+        
 
         candidate = extractor.extract_candidate_details(
             text,

@@ -374,24 +374,27 @@ async def process_resume(
     db.add(new_resume)
     db.commit()
     db.refresh(new_resume)
-    # await send_email(
-    #     to_email=new_resume.email,
-    #     subject="Resume Received Successfully",
-    #     body=f"""
-    # Hi {new_resume.candidate_name},
+    try:
+        await send_email(
+            to_email=new_resume.email,
+            subject="Resume Received Successfully",
+            body=f"""
+                Hi {new_resume.candidate_name},
 
-    # Your resume has been received successfully.
+                Your resume has been received successfully.
 
-    # ATS Score: {new_resume.ats_score}%
-    # Semantic Score: {new_resume.semantic_score}%
-    # Status: {new_resume.status}
+                ATS Score: {new_resume.ats_score}%
+                Semantic Score: {new_resume.semantic_score}%
+                Status: {new_resume.status}
 
-    # Thank you for applying.
+                Thank you for applying.
 
-    # Regards,
-    # HR Team
-    # """
-  # )
+                Regards,
+                HR Team
+                 """
+               )
+    except Exception as e:
+        print("Email error:", e)
 
     new_match = models.MatchResult(
         job_id=new_job.job_id,
@@ -638,12 +641,15 @@ def export_pdf():
 
 @app.get("/test-email")
 async def test_email():
-    await send_email(
-        to_email="saisreeadimulam2006@gmail.com",
-        subject="Resume Screening System",
-        body="Congratulations! Email is working successfully."
-    )
-    return {"message": "Email sent successfully"}
+    try:
+        await send_email(
+            to_email="saisreeadimulam2006@gmail.com",
+            subject="Resume Screening System",
+            body="Congratulations! Email is working successfully."
+        )
+    except Exception as e:
+     print("Email error:", e)
+     return {"message": "Email sent successfully"}
 
 @app.post("/update_status/{resume_id}")
 async def update_status(resume_id: int, status: str = Form(...)):
@@ -656,22 +662,24 @@ async def update_status(resume_id: int, status: str = Form(...)):
     if resume:
         resume.status = status
         db.commit()
+        try:
+            await send_email(
+                to_email=resume.email,
+                subject="Application Status Updated",
+                body=f"""
+                    Hi {resume.candidate_name},
 
-        await send_email(
-    to_email=resume.email,
-    subject="Application Status Updated",
-    body=f"""
-        Hi {resume.candidate_name},
+                    Your application status has been updated.
 
-        Your application status has been updated.
+                    Status: {resume.status}
 
-        Status: {resume.status}
+                    Thank you.
 
-        Thank you.
-
-        HR Team
-        """
-        )
+                    HR Team
+                    """
+                    )
+        except Exception as e:
+            print("Email error:", e)
 
     db.close()
 

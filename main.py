@@ -95,10 +95,10 @@ section_parser = SectionParser()
 
 matcher = ResumeMatcher()
 
-ai_matcher = SemanticMatcher()
+#ai_matcher = SemanticMatcher()
 
 
-skill_classifier = SkillClassifier()
+#skill_classifier = SkillClassifier()
 
 explainability = Explainability()
 
@@ -213,6 +213,8 @@ async def process_resume(
     text = resume["text"]
     hyperlinks = resume["hyperlinks"]
 
+    skill_classifier = SkillClassifier()
+
     bert_skills = skill_classifier.extract_skills(text)
 
     candidate = extractor.extract_candidate_details(
@@ -239,6 +241,8 @@ async def process_resume(
 
     candidate_skills = bert_skills
     extra_skills = []
+
+    ai_matcher = SemanticMatcher()
 
     semantic_score = ai_matcher.semantic_similarity(
     text,

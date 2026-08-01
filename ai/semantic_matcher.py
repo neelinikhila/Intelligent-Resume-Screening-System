@@ -5,34 +5,22 @@ from sklearn.metrics.pairwise import cosine_similarity
 class SemanticMatcher:
 
     def __init__(self):
-
-        print("Loading AI Semantic Model...")
-
-        self.model = SentenceTransformer("all-MiniLM-L6-v2")
-
-        print("AI Model Loaded Successfully")
-
-    # -------------------------------------------------
-    # Convert text into embedding
-    # -------------------------------------------------
+        self.model = None
 
     def get_embedding(self, text):
+
+        if self.model is None:
+            print("Loading AI Semantic Model...")
+            self.model = SentenceTransformer("all-MiniLM-L6-v2")
+            print("AI Model Loaded Successfully")
 
         if text is None:
             text = ""
 
-        text = str(text)
-
-        embedding = self.model.encode(
-            text,
+        return self.model.encode(
+            str(text),
             convert_to_numpy=True
         )
-
-        return embedding
-
-    # -------------------------------------------------
-    # Calculate Semantic Similarity
-    # -------------------------------------------------
 
     def semantic_similarity(
         self,
@@ -41,7 +29,6 @@ class SemanticMatcher:
     ):
 
         resume_embedding = self.get_embedding(resume_text)
-
         job_embedding = self.get_embedding(job_description)
 
         similarity = cosine_similarity(
@@ -59,38 +46,24 @@ class SemanticMatcher:
 
         return percentage
 
-    # -------------------------------------------------
-    # Recommendation
-    # -------------------------------------------------
-
     def recommendation(self, score):
 
         if score >= 90:
             return "⭐⭐⭐⭐⭐ Excellent Match"
-
         elif score >= 80:
             return "⭐⭐⭐⭐ Strong Match"
-
         elif score >= 70:
             return "⭐⭐⭐ Good Match"
-
         elif score >= 60:
             return "⭐⭐ Average Match"
-
         else:
             return "❌ Poor Match"
-
-    # -------------------------------------------------
-    # Candidate Status
-    # -------------------------------------------------
 
     def candidate_status(self, score):
 
         if score >= 85:
             return "Selected"
-
         elif score >= 70:
             return "Shortlisted"
-
         else:
             return "Rejected"

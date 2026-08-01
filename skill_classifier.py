@@ -3,10 +3,7 @@ from transformers import pipeline
 class SkillClassifier:
 
     def __init__(self):
-        self.classifier = pipeline(
-            "zero-shot-classification",
-            model="facebook/bart-large-mnli"
-        )
+        self.classifier = None
 
         self.skill_labels = [
             "Python",
@@ -29,6 +26,12 @@ class SkillClassifier:
         ]
 
     def extract_skills(self, text):
+
+        if self.classifier is None:
+            self.classifier = pipeline(
+                "zero-shot-classification",
+                model="facebook/bart-large-mnli"
+            )
 
         result = self.classifier(
             text,

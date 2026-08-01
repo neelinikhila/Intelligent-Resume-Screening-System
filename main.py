@@ -753,7 +753,18 @@ def match_resumes(job_id: int, request: Request):
         if not resume.resume_text:
             continue
 
-        found_skills = skill_classifier.extract_skills(resume.resume_text)
+        found_skills = []
+
+        SKILLS = [
+            "Python", "Java", "SQL", "Machine Learning", "Deep Learning",
+            "FastAPI", "Docker", "HTML", "CSS", "JavaScript",
+            "React", "Node.js", "PostgreSQL", "Git",
+            "Leadership", "Communication", "Teamwork"
+        ]
+
+        for skill in SKILLS:
+            if re.search(r"\b" + re.escape(skill) + r"\b", resume.resume_text, re.IGNORECASE):
+                found_skills.append(skill)
 
         matched, total, resume_percentage = matcher.resume_score(found_skills)
 

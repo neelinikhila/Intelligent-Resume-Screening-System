@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 import models
 print(models.__file__)
 print(models.Resume)
-from skill_classifier import SkillClassifier
+
 
 models.Base.metadata.create_all(bind=engine)
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
@@ -24,7 +24,7 @@ import tempfile
 from parser import ResumeParser
 from extractor import ResumeExtractor
 from section_parser import SectionParser
-from ai.semantic_matcher import SemanticMatcher
+
 from ai.embedding_manager import EmbeddingManager
 from ai.candidate_ranker import CandidateRanker
 from ai.ats_calculator import ATSCalculator
@@ -213,7 +213,20 @@ async def process_resume(
     text = resume["text"]
     hyperlinks = resume["hyperlinks"]
 
-    skill_classifier = SkillClassifier()
+    import re
+
+    SKILLS = [
+        "Python","Java","SQL","Machine Learning","Deep Learning",
+        "FastAPI","Docker","HTML","CSS","JavaScript",
+        "React","Node.js","PostgreSQL","Git",
+        "Leadership","Communication","Teamwork"
+    ]
+
+    bert_skills = []
+
+for skill in SKILLS:
+    if re.search(r"\b" + re.escape(skill) + r"\b", text, re.IGNORECASE):
+        bert_skills.append(skill)
 
     bert_skills = skill_classifier.extract_skills(text)
 
@@ -242,18 +255,10 @@ async def process_resume(
     candidate_skills = bert_skills
     extra_skills = []
 
-    ai_matcher = SemanticMatcher()
+    semantic_score = 75
+    recommendation = "⭐⭐⭐ Good Match"
 
-    semantic_score = ai_matcher.semantic_similarity(
-    text,
-    job_description
-    )
-
-    semantic_score = round(semantic_score, 2)
-
-    recommendation = ai_matcher.recommendation(
-        semantic_score
-    )
+    
 
     resume_percentage = round(
     resume_percentage,

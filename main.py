@@ -25,11 +25,11 @@ from parser import ResumeParser
 from extractor import ResumeExtractor
 from section_parser import SectionParser
 
-from ai.embedding_manager import EmbeddingManager
+#from ai.embedding_manager import EmbeddingManager
 from ai.candidate_ranker import CandidateRanker
 from ai.ats_calculator import ATSCalculator
 from ai.explainability import Explainability
-from ai.recommendation_engine import RecommendationEngine
+#from ai.recommendation_engine import RecommendationEngine
 from email_utils import send_interview_email
 from ai.interview_generator import InterviewGenerator
 

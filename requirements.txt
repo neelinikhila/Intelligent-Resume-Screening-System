@@ -11,3 +11,4 @@ numpy
 pandas
 reportlab
 openpyxl
+aiosmtplib

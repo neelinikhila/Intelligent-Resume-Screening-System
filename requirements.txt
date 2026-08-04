@@ -13,3 +13,4 @@ reportlab
 openpyxl
 aiosmtplib
 resend
+python-dotenv
